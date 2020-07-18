@@ -24,7 +24,7 @@ services:
       - MYSQL_PASSWORD=hello@world
       - MYSQL_DATABASE=users
     ports:
-      - '30001:8005'
+      - '3306:3306'
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:4.7
     container_name: test-mysql-phpmyadmin

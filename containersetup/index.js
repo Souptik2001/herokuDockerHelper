@@ -30,8 +30,36 @@ connection.connect((err) => {
     }
 });
 
+function createTable(){
+    const q = `CREATE TABLE Persons (
+        PersonID int,
+        LastName varchar(255),
+        FirstName varchar(255),
+        Address varchar(255),
+        City varchar(255)
+    );`;
+    connection.query(q, (err, result)=>{
+        if(err){
+            res.send(err);
+        }else{
+            res.send(result);
+        }
+    });
+}
+
 app.get('/', (req, res) => {
-    res.send("hi");
+    const q = "SELECT * FROM users_cred";
+    connection.query(q, (err, result)=>{
+        if(err){
+            res.json({
+                error : err
+            });
+        }else{
+            res.json({
+                success: result
+            });
+        }
+    });
 });
 
 app.post('/item/add', (req, res) => {
