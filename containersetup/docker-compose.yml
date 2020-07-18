@@ -4,20 +4,25 @@ services:
     container_name: test-nodejs-app
     restart: always
     depends_on: 
-      -mysql
+      - mysql
     build: .
     ports:
       - '80:3000'
+    environment: 
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=souptik
+      - MYSQL_PASS=hello@world
+      - MYSQL_DB=users
     links:
       - mysql
   mysql:
     container_name: mysql
     image: mysql:5.7
     environment: 
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASS=123
-      - MYSQL_DB=users
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=souptik
+      - MYSQL_PASSWORD=hello@world
+      - MYSQL_DATABASE=users
     ports:
       - '30001:8005'
   phpmyadmin:

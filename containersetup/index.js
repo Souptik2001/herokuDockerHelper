@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var connection = mysql.createConnection({
     host: process.env.MYSQL_HOST || 'localhost',
     user: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASS || 'root',
+    password: process.env.MYSQL_PASS || '123',
     database: process.env.MYSQL_DB || 'users'
 });
 connection.connect((err) => {
