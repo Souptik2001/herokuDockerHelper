@@ -12,7 +12,7 @@ services:
       - MYSQL_HOST=mysql
       - MYSQL_USER=souptik
       - MYSQL_PASS=hello@world
-      - MYSQL_DB=users
+      - MYSQL_DB=unsafeDB
     links:
       - mysql
   mysql:
@@ -22,7 +22,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=souptik
       - MYSQL_PASSWORD=hello@world
-      - MYSQL_DATABASE=users
+      - MYSQL_DATABASE=unsafeDB
     ports:
       - '3306:3306'
   phpmyadmin:
