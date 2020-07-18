@@ -14,35 +14,38 @@ var connectionDetails = {
     database: process.env.MYSQL_DB || 'users'
 };
 
-var connection = mysql.createConnection(connectionDetails);
+var connection;
+function createTable(){
+    const q = "CREATE TABLE `users`.`users_cred` ( `id` INT(225) NOT NULL AUTO_INCREMENT , `firstName` VARCHAR(225) NOT NULL , `lastName` VARCHAR(225) NOT NULL , `address` VARCHAR(225) NOT NULL , `city` VARCHAR(225) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB";
+    connection.query(q, (err, result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            console.log(result);
+            var q = "INSERT INTO `users_cred`(`firstName`, `lastName`, `address`, `city`) VALUES ('Souptik', 'Datta','XYZ','ABC')";
+            connection.query(q, (err, result)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(result);
+                }
+            });
+        }
+    });
+}
 function connectDataBase(){
+    connection = mysql.createConnection(connectionDetails);
     connection.connect((err) => {
         if (err) {
             setTimeout(connectDataBase, 1000);
             console.log(err);
         } else {
             console.log("Connection eshtablished succesfully....");
+            createTable();
         }
     });
 }
 connectDataBase();
-
-function createTable(){
-    const q = `CREATE TABLE Persons (
-        PersonID int,
-        LastName varchar(255),
-        FirstName varchar(255),
-        Address varchar(255),
-        City varchar(255)
-    );`;
-    connection.query(q, (err, result)=>{
-        if(err){
-            res.send(err);
-        }else{
-            res.send(result);
-        }
-    });
-}
 
 app.get('/', (req, res) => {
     const q = "SELECT * FROM users_cred";
