@@ -7,28 +7,25 @@ const app = express();
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Connect to mySQL
-// mongoose
-//   .connect(
-//     'mongodb://mongo:27017/docker-node-mongo',
-//     { useNewUrlParser: true }
-//   )
-//   .then(() => console.log('MongoDB Connected'))
-//   .catch(err => console.log(err));
-var connection = mysql.createConnection({
+var connectionDetails = {
     host: process.env.MYSQL_HOST || 'localhost',
     user: process.env.MYSQL_USER || 'root',
     password: process.env.MYSQL_PASS || '123',
     database: process.env.MYSQL_DB || 'users'
-});
-connection.connect((err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("Connection eshtablished succesfully....");
-    }
-});
+};
+
+var connection = mysql.createConnection(connectionDetails);
+function connectDataBase(){
+    connection.connect((err) => {
+        if (err) {
+            setTimeout(connectDataBase, 1000);
+            console.log(err);
+        } else {
+            console.log("Connection eshtablished succesfully....");
+        }
+    });
+}
+connectDataBase();
 
 function createTable(){
     const q = `CREATE TABLE Persons (
